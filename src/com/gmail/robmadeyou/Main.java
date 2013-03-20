@@ -66,6 +66,7 @@ public class Main {
 		Level.setUpLevel(0);
 		Fonts.setUpTextures();
 		Textures.loadTextures();
+		GuiBackground.init();
 		Sound.init();
 		while(!Display.isCloseRequested()){
 			glClear(GL_COLOR_BUFFER_BIT);
@@ -86,7 +87,6 @@ public class Main {
 		StateManager.onUpdate(delta);
 		glColor3f(1,1,1);
 		SoundStore.get().poll(0);
-		Fonts.drawString(delta + " a", 0, 0, 10, Color.white);
 	}
 	
 	public static void main(String args[]){

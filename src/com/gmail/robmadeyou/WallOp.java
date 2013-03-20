@@ -1,27 +1,17 @@
 package com.gmail.robmadeyou;
 
-import static org.lwjgl.opengl.GL11.GL_LINES;
 import static org.lwjgl.opengl.GL11.GL_QUADS;
 import static org.lwjgl.opengl.GL11.glBegin;
 import static org.lwjgl.opengl.GL11.glColor4f;
 import static org.lwjgl.opengl.GL11.glEnd;
 import static org.lwjgl.opengl.GL11.glTexCoord2f;
 import static org.lwjgl.opengl.GL11.glVertex2f;
-import static org.lwjgl.opengl.GL11.glVertex2i;
-
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.URL;
 import java.util.Random;
 
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.Display;
 import org.newdawn.slick.opengl.Texture;
-import org.newdawn.slick.opengl.TextureLoader;
-import org.newdawn.slick.util.ResourceLoader;
+import org.newdawn.slick.particles.ConfigurableEmitter.RandomValue;
 
 public class WallOp {
 	
@@ -32,6 +22,12 @@ public class WallOp {
 	private final float speed;
 	private float r,g,b;
 	private float oR, oG, oB;
+	private float sR, sG, sB;
+	private boolean isActive = false;
+	private boolean wasActive = false;
+	private int activeTimer = 10;
+	private int activeTimerCurrent = 0;
+	private int wasActiveTimerCurrent = 0;
 	public WallOp(int x, int y,int w,int h, float op){
 		this.x = x;
 		this.y = y;
@@ -46,13 +42,14 @@ public class WallOp {
 		this.oB = b;
 		Random ran = new Random();
 		int ranOp = ran.nextInt(30);
-		if(ranOp / 25000F < 0.001){
+		if(ranOp / 25000F < 0.01){
 			this.speed = (ranOp / 25000F) + 0.001F; 
-		}else if(ranOp / 25000F > 0.07F){
+		}else if(ranOp / 25000F > 0.1F){
 			this.speed = (ranOp / 25000F) - 0.03F;
 		}else{
 			this.speed = ranOp / 25000F;
 		}
+		this.op = ran.nextFloat();
 	}
 	public int getX(){
 		return x;
@@ -66,42 +63,84 @@ public class WallOp {
 	public int getHeight(){
 		return h;
 	}
+	public boolean isActive(){
+		return isActive;
+	}
+	public boolean wasActive(){
+		return wasActive;
+	}
+	public void setActive(boolean active){
+		this.isActive = active;
+	}
+	public void setOriginalColors(float r, float g, float b){
+		this.oR = r;
+		this.oG = g;
+		this.oB = b;
+	}
+	public void setChangeColors(float r, float g, float b){
+		this.sR = r;
+		this.sG = g;
+		this.sB = b;
+	}
 	public void onUpdate(){
-		draw();
-		animate();
+		
 		if(r != oR || g != oG || b != oB){
 			resetColor();
 		}
 		int mX = Mouse.getX();
 		int mY = Display.getHeight() - Mouse.getY();
+		if(wasActive){
+			wasActiveTimerCurrent++;
+			if(wasActiveTimerCurrent >= activeTimer){
+				wasActiveTimerCurrent = 0;
+				wasActive = false;
+			}
+		}
+		if(isActive == true){
+			Random ran = new Random();
+			op = ran.nextFloat();
+			activeTimerCurrent++;
+			if(activeTimerCurrent >= activeTimer){
+				isActive = false;
+				activeTimerCurrent = 0;
+				wasActive = true;
+			}
+		}
 		if(mX >= x && mX <= x + w && mY >= y && mY <= y + h){
 			op = 1F;
-			r = 0F;
-			g = 1F;
-			b = 0F;
+			r = sR;
+			g = sG;
+			b = sB;
+			if(Mouse.isButtonDown(0)){
+				isActive = true;
+			}else{
+				isActive = false;
+			}
 		}
+		draw();
+		animate();
 	}
 	public void resetColor(){
 		//Reseting to original color after being touched
 			//Red
-			if(r > oR && r <= 1F && r >= 0F){
-				r -= speed;
-			}else if(r > oR && r <= 1F && r >= 0F){
-				r += speed;
-			}
-			//Green
-			if(g > oG && g <= 1F && g >= 0F){
-				g -= speed;
-			}else if(g < oG && g <= 1F && g >= 0F){
-				g += speed;
-			}
-			//Blue
-			if(b > oB && b <= 1F && b >= 0F){
-				b -= speed;
-			}else if(b < oB && b <= 1F && b >= 0F){
-				b += speed;
-				
-			}
+		if(r > oR){
+			r -= speed * 2;
+		}
+		if(r < oR){
+			r += speed * 2;
+		}
+		if(g > oG){
+			g -= speed * 2;
+		}
+		if(g < oG){
+			g += speed * 2;
+		}
+		if(b > oB){
+			b -= speed * 2;
+		}
+		if(b < oB){
+			b += speed * 2;
+		}
 	}
 	public void dim(){
 		op -= speed;

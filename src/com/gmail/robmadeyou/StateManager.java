@@ -41,6 +41,7 @@ public class StateManager {
 	
 	public static void onUpdate(int delta){
 		GuiBackground.onUpdate(delta);
+		GuiBackground.isBackgroundInteractiveSquares = false;
 		if(State.equals("intro")){
 			if(!isIntroSetUp){
 				StateIntro.onSetUp();

@@ -130,6 +130,9 @@ public class WallList {
 		/*
 		 * END OF LEVEL 7!
 		 */
+		
+		wall[7][0] = new Walls(150, 150, 50, 50, "blue");
+		wall[7][1] = new Walls(200,200,50,50, "red");
 	}
 	public static void setUpAllOpBoxes(){
 		if(!haveWallsOpBeenSetUp){

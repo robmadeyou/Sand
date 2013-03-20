@@ -10,6 +10,7 @@ public class Level {
 	
 	public static int levelUnlocked = 0;
 	
+	
 	/*
 	 * This will be used for other difficulties
 	 * On harder levels the number of sand grains will not 
@@ -26,10 +27,12 @@ public class Level {
 	 */
 	public static int score = 0;
 	
+	public static int totalScore = 0;
 	/*
 	 * This is to check the difficulty of the game, if set to true dots won't
 	 * re-generate on a new level selecting :D very hard imo
 	 */
+	
 	public static boolean onHard = false;
 	public static void Timer(){
 		
@@ -53,9 +56,11 @@ public class Level {
 	public static void onLevelUpdate(){
 		if(levelUnlocked < currentLevel + 1){
 			levelUnlocked = currentLevel + 1;
+			
 		}
 		if(dotsOnScreen == dotsSecured && dotsOnScreen > 0){
 			StateManager.changeState("select", false);
+			totalScore += dotsSecured;
 			if(currentLevel <= 6){
 				setUpLevel(currentLevel + 1);
 			}
