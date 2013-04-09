@@ -5,21 +5,8 @@ import static org.lwjgl.opengl.GL11.glBegin;
 import static org.lwjgl.opengl.GL11.glColor4f;
 import static org.lwjgl.opengl.GL11.glEnd;
 import static org.lwjgl.opengl.GL11.glVertex2i;
-import static org.lwjgl.opengl.GL11.GL_LINES;
-
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.util.Random;
 
 import org.newdawn.slick.opengl.Texture;
-import org.newdawn.slick.opengl.TextureLoader;
-
-import com.gmail.robmadeyou.WallList.WallsOp;
 
 public class Wall {
 	
@@ -32,6 +19,16 @@ public class Wall {
 		this.w = w;
 		this.h = h;
 		this.color = color;
+	}
+	public void setPosition(int x, int y){
+		this.x = x;
+		this.y = y;
+	}
+	public void setX(int x){
+		this.x = x;
+	}
+	public void setY(int y){
+		this.y = y;
 	}
 	public int getX(){
 		return x;
@@ -53,7 +50,6 @@ public class Wall {
 		if(!WallList.haveWallsOpBeenSetUp){
 			int totalWidth = w;
 			int totalHeight = h;
-			int widthLeft = totalWidth;
 			int widthUsed = x + 0;
 			int boxesToFitHoriz = (int) ((totalWidth / 20) + 0.5);
 			int boxesToFitVert = (int) ((totalHeight / 20) + 0.5);
@@ -122,42 +118,5 @@ public class Wall {
 			glVertex2i(x, y + h);
 			glColor4f(1,1,1, 1F);
 		glEnd();
-		/*
-		 * And here I'm going to complete the todo :D
-		 * 
-		 */
-		//Moved it to a new method! Save some power! :D
-		/* Going to draw a box by just using lines around the wall box, this should give it a FEZ like texture :3
-		 * 1.....2
-		 * .     .
-		 * .     .
-		 * 4.....3
-		 */
-		glColor4f(0,0,0,0.3F);
-		//1 to 2
-		glBegin(GL_LINES);
-			glVertex2i(x, y);
-			glVertex2i(x + w, y);
-		glEnd();
-		
-		//2 to 3
-		glBegin(GL_LINES);
-			glVertex2i(x + w, y);
-			glVertex2i(x + w, y + h);
-		glEnd();
-		
-		//3 to 4
-		glBegin(GL_LINES);
-			glVertex2i(x + w, y + h);
-			glVertex2i(x, y + h);
-		glEnd();
-		
-		//4 to 1
-		glBegin(GL_LINES);
-			glVertex2i(x, y + h);
-			glVertex2i(x, y);
-		glEnd();
-		glColor4f(1,1,1,1F);
-		//Done :3
 	}
 }

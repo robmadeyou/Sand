@@ -7,10 +7,7 @@ import static org.lwjgl.opengl.GL11.glTexCoord2d;
 import static org.lwjgl.opengl.GL11.glVertex2i;
 import static org.lwjgl.opengl.GL11.glColor4f;
 
-import org.lwjgl.LWJGLException;
-import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.Display;
-import org.newdawn.slick.Color;
 
 
 
@@ -22,6 +19,8 @@ public class StateManager {
 	 * 	menu - Main menu screen
 	 * 	select - Level selection
 	 * 	game - Game screen
+	 * 	credits - Credits screen
+	 * 	inHelp - In game help screen
 	 * 	help - Help screen
 	 */
 	static String State = "intro";
@@ -35,6 +34,9 @@ public class StateManager {
 	static boolean isMenuSetUp = false;
 	static boolean isLevelSelectSetUp = false;
 	static boolean isGameSetUp = false;
+	static boolean isHelpSetUp = false;
+	static boolean isInHelpSetUp = false;
+	static boolean isCreditsSetUp = false;
 	
 	
 	static float opacity = 0F;
@@ -63,6 +65,26 @@ public class StateManager {
 				isLevelSelectSetUp = true;
 			}
 			StateLevelSelect.onUpdate();
+		}else if(State.equals("credits")){
+			if(!isCreditsSetUp){
+				StateCredits.onSetup();
+				isCreditsSetUp = true;
+			}
+			StateCredits.onUpdate();
+		
+		}else if(State.equals("inhelp")){
+			if(!isInHelpSetUp){
+				StateInGameHelp.onSetup();
+				isInHelpSetUp = true;
+			}
+			StateInGameHelp.onUpdate();
+		}else if(State.equals("help")){
+			if(!isHelpSetUp){
+				StateHelp.onSetup();
+				isHelpSetUp = true;
+			}
+			StateHelp.onUpdate();
+			
 		}else if(State.equals("game")){
 			if(!isGameSetUp){
 				StateGame.onSetup();
@@ -89,12 +111,12 @@ public class StateManager {
 				hasFinishedChanging = true;
 			}
 			if(hasStartedChanging && !isHalfWayChanging){
-				opacity += 0.01F;
+				opacity += 0.04F;
 				Textures.none.bind();
 				glColor4f(0,0,0, opacity);
 			}
 			if(isHalfWayChanging){
-				opacity -= 0.01F;
+				opacity -= 0.04F;
 				Textures.none.bind();
 				glColor4f(0,0,0, opacity);
 			}

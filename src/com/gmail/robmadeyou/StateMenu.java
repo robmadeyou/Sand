@@ -3,7 +3,6 @@ package com.gmail.robmadeyou;
 import org.lwjgl.openal.AL;
 import org.lwjgl.opengl.Display;
 import org.newdawn.slick.Color;
-import org.newdawn.slick.openal.SoundStore;
 
 public class StateMenu {
 	
@@ -51,6 +50,12 @@ public class StateMenu {
 		GuiBackground.isBackgroundInteractiveSquares = true;
 		if(startButton.isPressed()){
 			StateManager.changeState("select", true);
+		}
+		if(helpButton.isPressed()){
+			StateManager.changeState("help", true);
+		}
+		if(creditsButton.isPressed()){
+			StateManager.changeState("credits", true);
 		}
 		
 		if(exitButton.isPressed()){

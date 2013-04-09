@@ -11,7 +11,6 @@ import java.util.Random;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.Display;
 import org.newdawn.slick.opengl.Texture;
-import org.newdawn.slick.particles.ConfigurableEmitter.RandomValue;
 
 public class WallOp {
 	
@@ -72,6 +71,15 @@ public class WallOp {
 	public void setActive(boolean active){
 		this.isActive = active;
 	}
+	public float getR(){
+		return r;
+	}
+	public float getB(){
+		return b;
+	}
+	public float getG(){
+		return g;
+	}
 	public void setOriginalColors(float r, float g, float b){
 		this.oR = r;
 		this.oG = g;
@@ -99,6 +107,9 @@ public class WallOp {
 		if(isActive == true){
 			Random ran = new Random();
 			op = ran.nextFloat();
+			if(op <= 0.4F){
+				op = 0.4F;
+			}
 			activeTimerCurrent++;
 			if(activeTimerCurrent >= activeTimer){
 				isActive = false;
@@ -153,7 +164,7 @@ public class WallOp {
 		if(op >= 1F){
 			isDimming = true;
 		}
-		if(op <= 0F){
+		if(op <= 0.4F){
 			isDimming = false;
 		}
 		if(isDimming){

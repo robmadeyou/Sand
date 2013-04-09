@@ -13,6 +13,7 @@ public class GuiText {
 	private double x, y, size;
 	private String text, state, name;
 	private boolean hasBackground = false;
+	@SuppressWarnings("unused")
 	private Texture backTex;
 	private Color textColor;
 	public GuiText(String text, double x, double y, double size, String state, String name, Color textColor){
@@ -34,6 +35,9 @@ public class GuiText {
 	public void setBackgroundVisibility(boolean b){
 		this.hasBackground = b;
 	}
+	public void setText(String text){
+		this.text = text;
+	}
 	public boolean hasBackground(){
 		return hasBackground;
 	}
@@ -45,7 +49,8 @@ public class GuiText {
 		int width = Fonts.getWidth(text, size);
 		int height = Fonts.getHeight(text, size);
 		
-		backTex.bind();
+		Textures.none.bind();
+		Color.black.bind();
 		glBegin(GL_QUADS);//ball.getY() thingy
 			glTexCoord2d(0, 1);
 			glVertex2i((int) x - (2 * (int)size),(int) y - (2 * (int)size)); //1

@@ -6,7 +6,6 @@ import org.lwjgl.input.Keyboard;
 import org.lwjgl.openal.AL;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.DisplayMode;
-import org.newdawn.slick.Color;
 import org.newdawn.slick.openal.SoundStore;
 
 import static org.lwjgl.opengl.GL11.GL_BLEND;
@@ -43,6 +42,7 @@ public class Main {
 	
     public static boolean applet = false;
 	public Main(){
+		long startTime = System.nanoTime();
 		if(!applet){
 			try {
 				Display.setDisplayMode(new DisplayMode(1020,500));
@@ -68,11 +68,20 @@ public class Main {
 		Textures.loadTextures();
 		GuiBackground.init();
 		Sound.init();
+		double endTime = (System.nanoTime() - startTime) * 0.0000000001;
+		System.out.println("Loaded in: " + endTime + " seconds");
 		while(!Display.isCloseRequested()){
 			glClear(GL_COLOR_BUFFER_BIT);
 			
 			onUpdate(getDelta());
-			
+			while(Keyboard.next()){
+				if(Keyboard.getEventKeyState()){
+					if(Keyboard.isKeyDown(Keyboard.KEY_K)){
+						Level.currentLevel = 4;
+						StateManager.changeState("game", false);
+					}
+				}
+			}
 			Display.sync(60);
 			Display.update();
 		}

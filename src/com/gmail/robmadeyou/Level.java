@@ -59,7 +59,12 @@ public class Level {
 			
 		}
 		if(dotsOnScreen == dotsSecured && dotsOnScreen > 0){
-			StateManager.changeState("select", false);
+			if(currentLevel == 6){
+				StateCredits.hasWonTheGame = true;
+				StateManager.changeState("credits", true);
+			}else{
+				StateManager.changeState("select", false);
+			}
 			totalScore += dotsSecured;
 			if(currentLevel <= 6){
 				setUpLevel(currentLevel + 1);

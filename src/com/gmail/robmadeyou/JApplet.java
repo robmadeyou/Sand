@@ -3,19 +3,10 @@ package com.gmail.robmadeyou;
 import java.applet.Applet;
 import java.awt.BorderLayout;
 import java.awt.Canvas;
-import java.nio.FloatBuffer;
-import org.lwjgl.BufferUtils;
 import org.lwjgl.LWJGLException;
-import org.lwjgl.LWJGLUtil;
-import org.lwjgl.Sys;
 import org.lwjgl.opengl.Display;
-import org.lwjgl.input.Keyboard;
-import org.lwjgl.input.Mouse;
-import org.lwjgl.opengl.GLContext;
 
-import static org.lwjgl.opengl.ARBTransposeMatrix.*;
-import static org.lwjgl.opengl.GL11.*;
-
+@SuppressWarnings("serial")
 public class JApplet extends Applet {
 
 	/** The Canvas where the LWJGL Display is added */

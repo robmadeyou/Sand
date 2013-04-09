@@ -9,12 +9,15 @@ public class StateLevelSelect {
 	
 	static ArrayList<GuiButton> buttons = new ArrayList<GuiButton>();
 	static GuiButton backButton;
+	static GuiText scoreText;
+	
 	
 	public static void onSetup(){
 		Gui.addNewButton(new Gui.button(Display.getWidth() / 2 - 50, Display.getHeight() - 60, 100, 60, "select", "backButton", Textures.player1, Textures.player2, Color.white));
 		backButton = Gui.buttonArray[Gui.getButtonByName("backButton")];
 		
 		Gui.addNewTextBox(new Gui.text("Score: " + Level.totalScore, 0, 0, 3, "select", "scoreText", Color.white));
+		scoreText = Gui.textArray[Gui.getTextByName("scoreText")];
 		for(int i = 0; i < 7; i++){
 			Gui.addNewButton(new Gui.button(((Display.getWidth() - (7 * 100)) / 2) + (100 * i), (Display.getHeight() / 2) - 50, 90, 100, "select", "level" + i, Textures.player1, Textures.player2, Color.white));
 			
@@ -25,6 +28,7 @@ public class StateLevelSelect {
 	}
 	
 	public static void onUpdate(){
+		scoreText.setText("Score: " + Level.totalScore);
 		GuiBackground.isBackgroundInteractiveSquares = true;
 		for(int i = 0; i < buttons.size(); i++){
 			if(buttons.get(i).isPressed()){

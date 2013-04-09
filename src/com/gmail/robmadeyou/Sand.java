@@ -3,11 +3,8 @@ package com.gmail.robmadeyou;
 import java.util.Random;
 import static org.lwjgl.opengl.GL11.GL_POINTS;
 
-import java.text.DecimalFormat;
-
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.Display;
-import org.newdawn.slick.opengl.Texture;
 
 import static org.lwjgl.opengl.GL11.glBegin;
 import static org.lwjgl.opengl.GL11.glEnd;
@@ -24,7 +21,6 @@ public class Sand {
 	private int number;
 	private float speed;
 	private boolean isInFinish;
-	private Texture tex;
 	public Sand(int x, int y, String color){
 		this.x = x;
 		this.y = y;
